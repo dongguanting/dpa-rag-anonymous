@@ -22,7 +22,7 @@
 ## 💻 Data preparation
 We design a three-step method to gradually mine, augment, and filter out high-quality preference knowledge:
 
-### 1. Preference Knowledge Constructio
+### 1. Preference Knowledge Construction
 For each samples in different datasets, you need to use DPR to retrieve the top 100 passages. 
 
 Then, please follow the process of **Preference Knowledge Construction** section to extract documents labeled “Aligned Knowledge” or “Unaligned Knowledge” from different base model.
@@ -66,15 +66,6 @@ python NLI_filter.py
 
 ## :sparkles: Reranker-LLM Alignment
 
-### 1. Code clone
-Run the following command from the command line to clone our code from github to local:
-
-```bash
-git clone https://github.com/dongguanting/DPA-RAG.git
-```
-
-### 3. Start training
-
 We present some training data and test data. If you need to modify training data and test data, follow a similar data format without missing the necessary fields.
 
 ```bash
@@ -113,7 +104,7 @@ Tests are automatically performed on the specified data set after the training i
 ---
 
 
-## 🌈  LLM Training
+## LLM Training
 
 
 For LLM Training，we use the LlaMA-Factory v0.6.3 for Llama2-7B/13B, Mistral-7B, Qwen1.5-0.5B/4B/7B/14B, Phi2-2.7B. Moreover, we use the LlaMA-Factory v0.8.1 for Qwen2-7B, Llama3-8B. Thanks for their excellent work.
