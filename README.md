@@ -1,54 +1,9 @@
 
-## [Understand What LLM Needs: Dual Preference Alignment for Retrieval-Augmented Generation](https://arxiv.org/pdf/2406.18676)</h2>
+## [Understand What LLM Needs: Dual Preference Alignment for Retrieval-Augmented Generation]</h2>
 
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/understand-what-llm-needs-dual-preference/knowledge-base-question-answering-on-1)](https://paperswithcode.com/sota/knowledge-base-question-answering-on-1?p=understand-what-llm-needs-dual-preference)
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/understand-what-llm-needs-dual-preference/question-answering-on-natural-questions)](https://paperswithcode.com/sota/question-answering-on-natural-questions?p=understand-what-llm-needs-dual-preference)
-
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/understand-what-llm-needs-dual-preference/question-answering-on-triviaqa)](https://paperswithcode.com/sota/question-answering-on-triviaqa?p=understand-what-llm-needs-dual-preference)
-
-
-*Guanting Dong, Yutao Zhu, Chenghao Zhang, Zechen Wang, Zhicheng Dou and Ji-Rong Wen*
-
-*Gaoling School of Artificial Intelligence, Renmin University of China.*
-
-This is the repository contains core implementations of the **DPA-RAG**, proposed by [Understand What LLM Needs: Dual Preference Alignment for Retrieval-Augmented Generation](https://arxiv.org/abs/2406.18676).
-
-
-If you find this work helpful for your research, please kindly cite it.
-
-
-```bibtex
-@article{dong2024understand,
-  author       = {Guanting Dong and
-                  Yutao Zhu and
-                  Chenghao Zhang and
-                  Zechen Wang and
-                  Zhicheng Dou and
-                  Ji{-}Rong Wen},
-  title        = {Understand What {LLM} Needs: Dual Preference Alignment for Retrieval-Augmented
-                  Generation},
-  journal      = {CoRR},
-  volume       = {abs/2406.18676},
-  year         = {2024},
-  url          = {https://doi.org/10.48550/arXiv.2406.18676},
-  doi          = {10.48550/ARXIV.2406.18676},
-  eprinttype    = {arXiv},
-  eprint       = {2406.18676},
-  timestamp    = {Mon, 22 Jul 2024 14:28:34 +0200},
-  biburl       = {https://dblp.org/rec/journals/corr/abs-2406-18676.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
-}
-```
-
-
----
 
 
 ## 🍯 Overall Framework
-
-<img width="1302" alt="image" src="https://github.com/dongguanting/DPA-RAG/assets/60767110/fde07a6a-fa0d-4099-a6f8-0d16782b7ec4">
 
 
 **DPA-RAG** is a universal framework for aligning diverse preference knowledge within RAG systems, consisting of three main components:
@@ -64,22 +19,18 @@ If you find this work helpful for your research, please kindly cite it.
 
 
 
-
-
-
 ## 💻 Data preparation
 We design a three-step method to gradually mine, augment, and filter out high-quality preference knowledge:
 
 ### 1. Preference Knowledge Constructio
-For each samples in different datasets, you need to use [DPR](https://github.com/facebookresearch/DPR) to retrieve the top 100 passages. 
+For each samples in different datasets, you need to use DPR to retrieve the top 100 passages. 
 
 Then, please follow the process of **Preference Knowledge Construction** section to extract documents labeled “Aligned Knowledge” or “Unaligned Knowledge” from different base model.
 
 
 ### 2. Diverse Query Augmentation
 Please use **GPT-3.5-turbo** to perform five augmentations for each query, the template and requirements are as follow:
-   
-![image](https://github.com/dongguanting/DPA-RAG/assets/60767110/cbefab86-74c8-46ea-afc7-5f94b5ca100c)
+
 
 - Rephrasing. Rephrase the original query with the same intention.
 - Complexity. Increase the semantic complexity of the original query.
@@ -87,11 +38,10 @@ Please use **GPT-3.5-turbo** to perform five augmentations for each query, the t
 - Constraint. Add more conditional and constrained statements to the original query.
 - SPARQL. Rewrite the original query based on the SPARQL syntax and generate it directly
 
-We also provide **1k samples of NQ dataset** for each augmentation, which can be directly downloaded in [here](https://drive.google.com/drive/folders/1fbehvvNzas0VitdBky-pDLDZ_vLSHI81).
 
 
 ### 3. NLI Filtering
-Please use use [mDeBERTa](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7) as NLI model for consistency filtering between original and augmented samples.
+Please use use mDeBERTa as NLI model for consistency filtering between original and augmented samples.
 
 **Data format:**
 
@@ -166,13 +116,13 @@ Tests are automatically performed on the specified data set after the training i
 ## 🌈  LLM Training
 
 
-For LLM Training，we use the [LlaMA-Factory v0.6.3](https://github.com/hiyouga/LLaMA-Factory/releases/tag/v0.6.3) for Llama2-7B/13B, Mistral-7B, Qwen1.5-0.5B/4B/7B/14B, Phi2-2.7B. Moreover, we use the [LlaMA-Factory v0.8.1](https://github.com/hiyouga/LLaMA-Factory/releases/tag/v0.8.1) for Qwen2-7B, Llama3-8B. Thanks for their excellent work.
+For LLM Training，we use the LlaMA-Factory v0.6.3 for Llama2-7B/13B, Mistral-7B, Qwen1.5-0.5B/4B/7B/14B, Phi2-2.7B. Moreover, we use the LlaMA-Factory v0.8.1 for Qwen2-7B, Llama3-8B. Thanks for their excellent work.
 
 
 
 ### 1. Pre-aligned Training:
 
-We provide the NQ dataset at the prealigned stage [here](https://drive.google.com/drive/folders/1JFCGpnmqfMHGh6X9cMJFtTxVduHkiQXi?usp=sharing). Note that the prealigned data we provide does not include augmented data, please merge augmentation data to unlock more powerful alignment capabilities. You can construct other datasets on your own following our NQ's data format. Please replace the parameters with $ symbols with your own parameters.
+We provide the NQ dataset at the prealigned stage. Note that the prealigned data we provide does not include augmented data, please merge augmentation data to unlock more powerful alignment capabilities. You can construct other datasets on your own following our NQ's data format. Please replace the parameters with $ symbols with your own parameters.
 
 ```bash
 deepspeed --num_gpus=8 train_bash.py \
@@ -207,8 +157,7 @@ deepspeed --num_gpus=8 train_bash.py \
 
 ### 2. SFT Training:
 
-You can find the original training data with top3 passages (w/o data augmentation) [here](https://drive.google.com/drive/folders/1dCCpAVPiwPgjOhuKGcyonwgfr2kntJHZ?usp=sharing).
-Please merge your augmentation data to unlock more powerful alignment capabilities.
+You can find the original training data with top3 passages w/o data augmentation. Please merge your augmentation data to unlock more powerful alignment capabilities.
 
 ```bash
 deepspeed --num_gpus=8 train_bash.py \
@@ -243,7 +192,7 @@ deepspeed --num_gpus=8 train_bash.py \
 
 ### 3. Inference
 
-You can find our reranked test data with top3 passages [here](https://drive.google.com/drive/folders/1HFAEGX5A5aVFNuWMzA1zLoRtfE-FyoTB?usp=sharing). For WebQSP dataset. we only provide train and test data with top2 passages for aligning.
+You can find our reranked test data with top3 passages. For WebQSP dataset. we only provide train and test data with top2 passages for aligning.
 
 ```bash
  CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
