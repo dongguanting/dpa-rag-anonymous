@@ -1,9 +1,9 @@
 
-## [Understand What LLM Needs: Dual Preference Alignment for Retrieval-Augmented Generation]</h2>
+## Understand What LLM Needs: Dual Preference Alignment for Retrieval-Augmented Generation</h2>
 
 
 
-## 🍯 Overall Framework
+## Overall Framework
 
 
 **DPA-RAG** is a universal framework for aligning diverse preference knowledge within RAG systems, consisting of three main components:
@@ -19,7 +19,7 @@
 
 
 
-## 💻 Data preparation
+## Data preparation
 We design a three-step method to gradually mine, augment, and filter out high-quality preference knowledge:
 
 ### 1. Preference Knowledge Construction
@@ -64,7 +64,7 @@ python NLI_filter.py
 
 ---
 
-## :sparkles: Reranker-LLM Alignment
+## Reranker-LLM Alignment
 
 We present some training data and test data. If you need to modify training data and test data, follow a similar data format without missing the necessary fields.
 
